@@ -1,12 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://c65c3nut4461u"]
+[gd_scene load_steps=5 format=3 uid="uid://c65c3nut4461u"]
 
-[ext_resource type="Script" path="res://Node2d.cs" id="1_d65eh"]
-[ext_resource type="Script" path="res://CustomData.cs" id="2_qbhtj"]
+[ext_resource type="Script" path="res://PrintTool.cs" id="1_bruwx"]
+[ext_resource type="Script" path="res://ExportCustom.cs" id="2_7oe8s"]
+[ext_resource type="Script" path="res://CustomData.cs" id="3_hs4mf"]
 
-[sub_resource type="Resource" id="Resource_n8tro"]
-script = ExtResource("2_qbhtj")
-Floats = PackedFloat32Array(0, 123.123, 0, 321.321, 0)
+[sub_resource type="Resource" id="Resource_ch4ap"]
+script = ExtResource("3_hs4mf")
+Floats = PackedFloat32Array(0, 3.123, 0, 9.123)
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_d65eh")
-Data = SubResource("Resource_n8tro")
+
+[node name="PrintTool" type="Node" parent="."]
+script = ExtResource("1_bruwx")
+IntsToSave = PackedInt32Array(333, 0, 999)
+FloatsToSave = PackedFloat32Array(10.234)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("2_7oe8s")
+Data = SubResource("Resource_ch4ap")
