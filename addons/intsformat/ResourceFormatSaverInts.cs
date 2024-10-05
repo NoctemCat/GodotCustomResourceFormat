@@ -1,6 +1,8 @@
 
 
 
+using System.Globalization;
+using System.Linq;
 using Godot;
 namespace NoctemCat.TestLoader;
 
@@ -16,9 +18,11 @@ public partial class ResourceFormatSaverInts : ResourceFormatSaver
             return Error.InvalidData;
         }
 
-        string content = string.Join(',', data.Ints);
+        string contentInts = string.Join(',', data.Ints);
+        string contentFloats = string.Join(',', data.Floats.Select((num) => num.ToString(CultureInfo.InvariantCulture)));
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
-        file.StoreString(content);
+        file.StoreLine(contentInts);
+        file.StoreLine(contentFloats);
 
         return Error.Ok;
     }

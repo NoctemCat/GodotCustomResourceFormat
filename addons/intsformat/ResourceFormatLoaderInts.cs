@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Globalization;
 using System.Linq;
 using Godot;
 namespace NoctemCat.TestLoader;
@@ -17,12 +18,15 @@ public partial class ResourceFormatLoaderInts : ResourceFormatLoader
         }
 
         using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
-        string content = file.GetAsText();
-        string[] nums = content.Split(',');
+        string contentInts = file.GetLine();
+        string[] numsInts = contentInts.Split(',').Where((num) => !string.IsNullOrWhiteSpace(num)).ToArray();
+        string contentFloats = file.GetLine();
+        string[] numsFloats = contentFloats.Split(',').Where((num) => !string.IsNullOrWhiteSpace(num)).ToArray();
 
         var res = new CustomData
         {
-            Ints = new(nums.Select((num) => int.Parse(num)))
+            Ints = new(numsInts.Length > 0 ? numsInts.Select((num) => int.Parse(num)) : []),
+            Floats = numsFloats.Length > 0 ? numsFloats.Select((num) => float.Parse(num, CultureInfo.InvariantCulture)).ToArray() : []
         };
         return res;
     }
